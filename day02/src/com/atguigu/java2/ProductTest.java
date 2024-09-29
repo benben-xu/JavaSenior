@@ -21,17 +21,37 @@ class Clerk{
 
     private int productCount = 0;
     //生产产品
-    public void produceProduct() {
+    public synchronized void produceProduct() {
         if (productCount < 20){
             productCount++;
             System.out.println(Thread.currentThread().getName() + "：开始生产第" + productCount);
-        }else{
 
+            notify();
+
+        }else{
+            try {
+                wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
         }
     }
 
     //消费产品
-    public void consumeProduct() {
+    public synchronized void consumeProduct() {
+        if (productCount > 0){
+            System.out.println(Thread.currentThread().getName() + "开始消费第" + productCount);
+            productCount--;
+
+            notify();
+        }else {
+            try {
+                wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+
+        }
     }
 }
 class Producer extends Thread{
