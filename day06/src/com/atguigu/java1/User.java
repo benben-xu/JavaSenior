@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author JiaMing_Xu
  * @create 2024-12-16-20:36
  */
-public class User {
+public class User implements Comparable{
     private String name;
     private int age;
     public User(String name, int age) {
@@ -37,8 +37,23 @@ public class User {
         return age == user.age && Objects.equals(name, user.name);
     }
 
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, age);
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+
+    @Override
+    public int compareTo(Object o){
+        if (o instanceof User){
+            User u = (User) o;
+            int compare = this.name.compareTo(u.name);
+            if (compare != 0){
+                return compare;
+            }else {
+                return Integer.compare(this.age, u.age);
+            }
+        }else {
+            throw new RuntimeException("输入的类型不匹配");
+        }
+    }
 }
