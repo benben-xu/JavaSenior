@@ -2,8 +2,8 @@ package com.atguigu.java;
 
 import org.junit.Test;
 
-import javax.annotation.processing.SupportedAnnotationTypes;
 import java.util.ArrayList;
+import java.util.List;
 
 /** 如何自定义泛型结构：泛型类、泛型接口；泛型方法。
  *
@@ -39,6 +39,17 @@ public class GenericTest1 {
         ArrayList<String> list1 = null;
         ArrayList<Integer> list2 = null;
 //        list2 = list1;
+
+    }
+
+    //测试泛型方法
+    @Test
+    public void test4(){
+        Order<String> order = new Order<>();
+        Integer[] arr = new Integer[]{1,2,3,4};
+        //泛型方法在调用时，指明泛型参数的类型
+        List<Integer> list = order.copyFormArrayToList(arr);
+        System.out.println(list);
 
     }
 

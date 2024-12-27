@@ -1,5 +1,8 @@
 package com.atguigu.java;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 自定义泛型类
 @author JiaMing_Xu
@@ -49,4 +52,16 @@ package com.atguigu.java;
 //
 //        }
 //    }
+
+    //泛型方法：在方法中出现了泛型的结构，泛型参数与类的泛型参数没有任何关系
+    //换句话说，泛型方法所属的类是不是泛型类都没有关系。
+    //泛型方法，可以声明为静态的。原因：泛型参数是在调用方法时确定的。并非在实例化时
+    public <E> List<E> copyFormArrayToList(E[] arr){
+        ArrayList<E> list = new ArrayList<>();
+        for (E e : arr) {
+            list.add(e);
+        }
+        return list;
+
+    }
 }
