@@ -2,10 +2,7 @@ package com.atguigu.java;
 
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  *
@@ -144,18 +141,78 @@ public class FileReaderWriterTest {
                 如果流使用的构造器是：FileWriter(file,true):不会对原有文件覆盖，而是在原有文件基础上追加内容
      */
     @Test
-    public void testFileWriter() throws IOException {
-        //1.提供File类的对象，指明写出到的文件
-        File file = new File("hello1.txt");
+    public void testFileWriter() {
+        FileWriter fw = null;
+        try {
+            //1.提供File类的对象，指明写出到的文件
+            File file = new File("hello1.txt");
 
-        //2.提供FileWriter的对象，用于数据的写出
-        FileWriter fw = new FileWriter(file,false);
+            //2.提供FileWriter的对象，用于数据的写出
+            fw = new FileWriter(file,false);
 
-        //3.写出的操作
-        fw.write("I hava a dream!\n");
-        fw.write("you need to hava a dream!");
+            //3.写出的操作
+            fw.write("ZhiYue是大佬\n");
+            fw.write("我是小白!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fw != null){
+                //4.流资源的关闭
+                try {
+                    //4.资源的关闭
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-        //4.流资源的关闭
-        fw.close();
+
+    }
+
+    @Test
+    public void testFileReaderWriter() throws IOException {
+        FileReader fr = null;
+        FileWriter fw = null;
+        try {
+            //1.创建File类的对象，指明读入和写出的文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello2.txt");
+//            File srcFile = new File("C:\\Users\\benben\\Pictures\\Screenshots\\test.png");
+//            File destFile = new File("test1.png");
+
+            //2.创建输入流和输出流的对象
+            fr = new FileReader(srcFile);
+            fw = new FileWriter(destFile);
+
+            //3.数据的读入和写出操作
+            char[] cbuf = new char[5];
+            int len;//记录每次读入到cbuf数组中的字符的个数
+            while ((len = fr.read(cbuf)) != -1) {
+                //每次写出len个字符
+                fw.write(cbuf, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            try {
+                if(fr != null){
+                    fr.close();
+                }
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(fw != null){
+                    fw.close();
+                }
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }
+
